@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bookService = require('../service/bookService');
+var jwtService = require("../service/jwtService.js");
 
 /**
  * @swagger
@@ -191,6 +192,8 @@ router.get('/:bookId', async function (req, res, next) {
  * paths:
  *   /books:
  *     post:
+ *       security:
+ *         - bearerAuth: []
  *       tags:
  *         - Book
  *       summary: 예약 생성
@@ -222,6 +225,7 @@ router.get('/:bookId', async function (req, res, next) {
  */
 router.post('/', async function(req, res, next) {
 	try {
+		jwtService.accessTokenVerify(req.headers.authorization);
 		var book = await bookService.addBook(
 			req.query.userId,
 			req.body.start,
@@ -240,6 +244,8 @@ router.post('/', async function(req, res, next) {
  * paths:
  *   /books:
  *     patch:
+ *       security:
+ *         - bearerAuth: []
  *       tags:
  *         - Book
  *       summary: 예약 수정
@@ -277,6 +283,7 @@ router.post('/', async function(req, res, next) {
  */
 router.patch('/', async function (req, res, next) {
 	try {
+		jwtService.accessTokenVerify(req.headers.authorization);
 		var book = await bookService.updateBookById(
 			req.query.userId,
 			req.query.bookId,
@@ -296,6 +303,8 @@ router.patch('/', async function (req, res, next) {
  * paths:
  *   /books:
  *     delete:
+ *       security:
+ *         - bearerAuth: []
  *       tags:
  *         - Book
  *       summary: 예약 삭제
@@ -320,6 +329,7 @@ router.patch('/', async function (req, res, next) {
  */
 router.delete('/', async function (req, res, next) {
 	try {
+		jwtService.accessTokenVerify(req.headers.authorization);
 		await bookService.deleteBookById(
 			req.query.userId,
 			req.query.bookId
