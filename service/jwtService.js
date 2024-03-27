@@ -45,7 +45,7 @@ const accessTokenSign = (userId) => {
 	access token payload의 user id와 query의 userId 비교
 	실패시 TokenAuthorizeError
 */
-const accessTokenVerify = (userId, accessToken) => {
+const accessTokenVerify = (accessToken, userId) => {
 	try {
 		accessToken = tokenParse(accessToken);
 		if (!(userId instanceof String))

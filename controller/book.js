@@ -225,7 +225,7 @@ router.get('/:bookId', async function (req, res, next) {
  */
 router.post('/', async function(req, res, next) {
 	try {
-		jwtService.accessTokenVerify(req.headers.authorization);
+		jwtService.accessTokenVerify(req.headers.authorization, req.query.userId);
 		var book = await bookService.addBook(
 			req.query.userId,
 			req.body.start,
@@ -283,7 +283,7 @@ router.post('/', async function(req, res, next) {
  */
 router.patch('/', async function (req, res, next) {
 	try {
-		jwtService.accessTokenVerify(req.headers.authorization);
+		jwtService.accessTokenVerify(req.headers.authorization, req.query.userId);
 		var book = await bookService.updateBookById(
 			req.query.userId,
 			req.query.bookId,
@@ -329,7 +329,7 @@ router.patch('/', async function (req, res, next) {
  */
 router.delete('/', async function (req, res, next) {
 	try {
-		jwtService.accessTokenVerify(req.headers.authorization);
+		jwtService.accessTokenVerify(req.headers.authorization, req.query.userId);
 		await bookService.deleteBookById(
 			req.query.userId,
 			req.query.bookId
